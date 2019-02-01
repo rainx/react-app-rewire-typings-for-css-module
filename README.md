@@ -1,5 +1,7 @@
 # react-app-rewire-typings-for-css-module
 
+[![Build Status](https://travis-ci.org/rainx/react-app-rewire-typings-for-css-module.svg?branch=master)](https://travis-ci.org/rainx/react-app-rewire-typings-for-css-module)
+
 ## Description
 
 Use typings-for-css-module-loader for generate _.d.ts file for css module(Both _.module.css and \*.modules.scss"
