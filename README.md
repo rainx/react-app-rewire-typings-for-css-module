@@ -23,6 +23,8 @@ this rewire will use `typings-for-css-module-loader` instead of `css-loader` on 
 and edit your `config-overrides.js` file
 
 ```javascript
+const rewireTypingsForCssModule = require("react-app-rewire-typings-for-css-module");
+
 module.exports = {
   webpack: function(config, env) {
     /**
@@ -32,4 +34,11 @@ module.exports = {
     return config;
   }
 };
+```
+
+If you wanna customized options for `typings-for-css-modules-loader` you could use the factory to get a new `rewireTypingsForCssModule`
+
+```javascript
+// no addition options
+config = rewireTypingsForCssModule.factory({})(config);
 ```
