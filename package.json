@@ -1,15 +1,15 @@
 {
   "name": "react-app-rewire-typings-for-css-module",
-  "version": "1.0.0",
-  "description": "Use typings-for-css-module-loader for generate *.d.ts file for css module(Both *.module.css and *.modules.scss",
+  "version": "2.0.0",
+  "description": "Use css-modules-typescript-loader for generate *.d.ts file for css module(Both *.module.css and *.modules.scss",
   "main": "index.js",
   "author": "RainX<i@rainx.cc>",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^24.0.0"
+    "jest": "^24.8.0"
   },
   "peerDependencies": {
-    "typings-for-css-modules-loader": "^1.7.0"
+    "css-modules-typescript-loader": "^2.0.3"
   },
   "scripts": {
     "test": "jest"

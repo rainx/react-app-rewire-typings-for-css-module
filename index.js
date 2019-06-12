@@ -27,24 +27,37 @@ function createRewireTypingsForCssModule(options) {
             );
           })
           .forEach(oneOf => {
-            oneOf.use.forEach(entry => {
+            // To insert css-modules-typescript-loader before css-loader
+            let cssLoaderIndex = -1;
+            oneOf.use.forEach((entry, index) => {
               if (typeof entry == "object") {
                 if (
                   entry.loader &&
                   entry.loader.includes("css-loader") &&
                   !entry.loader.includes("postcss-loader")
                 ) {
-                  const typingsForCssModuleLoader =
-                    "typings-for-css-modules-loader";
-                  entry.loader = typingsForCssModuleLoader;
-                  entry.options = {
-                    ...entry.options,
-                    ...options
-                  };
+                  cssLoaderIndex = index;
                 }
               }
               return entry;
             });
+            // Add the loader
+            if (cssLoaderIndex !== -1) {
+              // Append options
+              if (oneOf.use[cssLoaderIndex].options) {
+                oneOf.use[cssLoaderIndex].options = {
+                  ...oneOf.use[cssLoaderIndex].options,
+                  ...options
+                };
+              }
+
+              oneOf.use.splice(
+                cssLoaderIndex,
+                0,
+                "css-modules-typescript-loader"
+              );
+              console.log(JSON.stringify(oneOf, 2));
+            }
           });
       }
     }
@@ -54,7 +67,6 @@ function createRewireTypingsForCssModule(options) {
 }
 
 const rewireTypingsForCssModule = createRewireTypingsForCssModule({
-  namedExport: true,
   camelCase: true
 });
 
