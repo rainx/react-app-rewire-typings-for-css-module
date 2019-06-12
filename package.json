@@ -5,6 +5,10 @@
   "main": "index.js",
   "author": "RainX<i@rainx.cc>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rainx/react-app-rewire-typings-for-css-module.git"
+  },
   "devDependencies": {
     "jest": "^24.8.0"
   },
