@@ -67,7 +67,9 @@ function createRewireTypingsForCssModule(options) {
 }
 
 const rewireTypingsForCssModule = createRewireTypingsForCssModule({
-  localsConvention: "camelCase"
+  modules: {
+    exportLocalsConvention: "camelCase"
+  }
 });
 
 rewireTypingsForCssModule.factory = createRewireTypingsForCssModule;
