@@ -12,10 +12,16 @@
   "devDependencies": {
     "jest": "^24.9.0"
   },
+  "files": [
+    "index.js"
+  ],
   "peerDependencies": {
     "css-modules-typescript-loader": "^4.0.0"
   },
   "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "deepmerge": "^4.2.2"
   }
 }
