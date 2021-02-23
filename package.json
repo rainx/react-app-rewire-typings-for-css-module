@@ -1,6 +1,6 @@
 {
   "name": "react-app-rewire-typings-for-css-module",
-  "version": "3.0.0",
+  "version": "4.0.2",
   "description": "Use css-modules-typescript-loader for generate *.d.ts file for css module(Both *.module.css and *.modules.scss",
   "main": "index.js",
   "author": "RainX<i@rainx.cc>",
