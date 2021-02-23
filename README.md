@@ -8,7 +8,10 @@ Use typings-for-css-module-loader for generate _.d.ts file for css module(Both _
 
 Add `css-modules-typescript-loader` after css-loader to generate typedefined file,
 
-> For support css version < 2.x.x, See this older version: https://github.com/rainx/react-app-rewire-typings-for-css-module/tree/aa5239f623a731ed331b6d60a4c3359d2435493e
+> For support css loader version >= 4.0.0, use v4.0.3: https://github.com/rainx/react-app-rewire-typings-for-css-module/releases/tag/4.0.3
+> For support css loader version is 3.x.x, use v3.0.0: https://github.com/rainx/react-app-rewire-typings-for-css-module/releases/tag/3.0.0
+> For support css loader version is 2.x.x, use v2.0.0: https://github.com/rainx/react-app-rewire-typings-for-css-module/releases/tag/2.0.0
+> For support css loader version < 2.0.0, use v1.0.0: https://github.com/rainx/react-app-rewire-typings-for-css-module/releases/tag/1.0.0
 
 ## Usage
 
