@@ -1,73 +1,47 @@
+const merge = require('deepmerge');
+
 /**
  * Factory to make a typings for css module rewire tool
  *
- * @param {object} options This option is the string append after loader eg: '{namedExport: true, camelCase: true }
+ * @param {object} options Options to deep merge with the existing options
+ * @see https://webpack.js.org/loaders/css-loader/#options
  */
 function createRewireTypingsForCssModule(options) {
-  return function(config, env) {
-    // style files regexes
-    // This is copy from ejected webpack.config.js
-    const cssModuleRegex = /\.module\.css$/;
-    const sassModuleRegex = /\.module\.(scss|sass)$/;
+  return function (config, env) {
+    // Disabled in production:
+    if (env === 'production') return config;
 
-    const devMode = env !== "production";
-    // Only work on dev mode
-    if (devMode) {
-      const oneOfRule = config.module.rules.find(
-        rule => rule.oneOf !== undefined
+    // style files regexes copied from ejected webpack.config.js
+    const regexes = [
+      /\.module\.css$/.toString(),
+      /\.module\.(scss|sass)$/.toString()
+    ];
+
+    const oneOfs = config.module.rules.find((rule) => !!rule.oneOf).oneOf;
+    for (const oneOf of oneOfs) {
+      if (!oneOf.test || !regexes.includes(oneOf.test.toString())) continue;
+      const cssLoader = oneOf.use.find(
+        (entry) =>
+          entry.loader &&
+          entry.loader.includes('css-loader') &&
+          !entry.loader.includes('postcss-loader')
       );
+      cssLoader.options = merge(cssLoader.options, options);
 
-      if (oneOfRule) {
-        oneOfRule.oneOf
-          .filter(oneOf => {
-            return (
-              oneOf.test &&
-              (oneOf.test.toString() === cssModuleRegex.toString() ||
-                oneOf.test.toString() === sassModuleRegex.toString())
-            );
-          })
-          .forEach(oneOf => {
-            // To insert css-modules-typescript-loader before css-loader
-            let cssLoaderIndex = -1;
-            oneOf.use.forEach((entry, index) => {
-              if (typeof entry == "object") {
-                if (
-                  entry.loader &&
-                  entry.loader.includes("css-loader") &&
-                  !entry.loader.includes("postcss-loader")
-                ) {
-                  cssLoaderIndex = index;
-                }
-              }
-              return entry;
-            });
-            // Add the loader
-            if (cssLoaderIndex !== -1) {
-              // Append options
-              if (oneOf.use[cssLoaderIndex].options) {
-                oneOf.use[cssLoaderIndex].options = {
-                  ...oneOf.use[cssLoaderIndex].options,
-                  ...options
-                };
-              }
-
-              oneOf.use.splice(
-                cssLoaderIndex,
-                0,
-                "css-modules-typescript-loader"
-              );
-              console.log(JSON.stringify(oneOf, 2));
-            }
-          });
+      // Insert css-modules-typescript-loader before css-loader
+      if (!oneOf.use.includes('css-modules-typescript-loader')) {
+        const index = oneOf.use.indexOf(cssLoader);
+        oneOf.use.splice(index, 0, 'css-modules-typescript-loader');
       }
     }
-
     return config;
   };
 }
 
 const rewireTypingsForCssModule = createRewireTypingsForCssModule({
-  localsConvention: "camelCase"
+  modules: {
+    exportLocalsConvention: 'camelCase'
+  }
 });
 
 rewireTypingsForCssModule.factory = createRewireTypingsForCssModule;
